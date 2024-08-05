@@ -8,6 +8,8 @@ import TeacherDashboard from './pages/teacher/TeacherDashboard';
 import LoginPage from './pages/LoginPage';
 import AdminRegisterPage from './pages/admin/AdminRegisterPage';
 import ChooseUser from './pages/ChooseUser';
+import TeacherComplain from './pages/teacher/TeacherComplain';
+import AttendanceForm from './pages/teacher/AttendanceForm';
 
 const App = () => {
   const { currentRole } = useSelector(state => state.user);
@@ -25,9 +27,14 @@ const App = () => {
           <Route path="/Teacherlogin" element={<LoginPage role="Teacher" />} />
 
           <Route path="/Adminregister" element={<AdminRegisterPage />} />
+          
+          {/* Add new routes for QR code attendance */}
+          <Route path="/teacher/complain" element={<TeacherComplain />} />
+          <Route path="/attendance/:sessionId" element={<AttendanceForm />} />
 
           <Route path='*' element={<Navigate to="/" />} />
-        </Routes>}
+        </Routes>
+      }
 
       {currentRole === "Admin" &&
         <>
@@ -50,4 +57,4 @@ const App = () => {
   )
 }
 
-export default App
+export default App;

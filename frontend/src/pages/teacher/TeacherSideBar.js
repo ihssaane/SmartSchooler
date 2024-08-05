@@ -33,7 +33,7 @@ const TeacherSideBar = () => {
                     <ListItemIcon>
                         <AnnouncementOutlinedIcon color={location.pathname.startsWith("/Teacher/complain") ? 'primary' : 'inherit'} />
                     </ListItemIcon>
-                    <ListItemText primary="Complain" />
+                    <ListItemText primary="QRCode" />
                 </ListItemButton>
             </React.Fragment>
             <Divider sx={{ my: 1 }} />
