@@ -9,7 +9,7 @@ import LoginPage from './pages/LoginPage';
 import AdminRegisterPage from './pages/admin/AdminRegisterPage';
 import ChooseUser from './pages/ChooseUser';
 import TeacherComplain from './pages/teacher/TeacherComplain';
-import AttendanceForm from './pages/teacher/AttendanceForm';
+import AttendanceForm from './pages/student/AttendanceForm';
 
 const App = () => {
   const { currentRole } = useSelector(state => state.user);
@@ -30,7 +30,7 @@ const App = () => {
           
           {/* Add new routes for QR code attendance */}
           <Route path="/teacher/complain" element={<TeacherComplain />} />
-          <Route path="/attendance/:sessionId" element={<AttendanceForm />} />
+          <Route path="/student/attendance/:sessionId" component={AttendanceForm} />
 
           <Route path='*' element={<Navigate to="/" />} />
         </Routes>

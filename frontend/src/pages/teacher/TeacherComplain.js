@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Box, Button, Typography } from '@mui/material';
+import QRCode from 'qrcode.react';
 
-const TeacherComplain = () => {
+const AttendanceQRCode = () => {
   const [qrCode, setQrCode] = useState(null);
-  const sessionId = "unique-session-id"; // Replace this with the actual session ID
+  const sessionId = "session-" + Date.now(); // Generate a unique session ID
 
   const generateQRCode = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/qrCode/generateQRCode/${sessionId}`);
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/qrCode/generateAttendanceQR/${sessionId}`);
       setQrCode(response.data.qrCode);
     } catch (error) {
       console.error('Error generating QR code', error);
@@ -18,7 +19,7 @@ const TeacherComplain = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4 }}>
       <Typography variant="h4" gutterBottom>
-        Mark your attendance
+        Generate Attendance QR Code
       </Typography>
       <Button variant="contained" color="primary" onClick={generateQRCode}>
         Generate QR Code for Attendance
@@ -26,13 +27,13 @@ const TeacherComplain = () => {
       {qrCode && (
         <Box sx={{ mt: 4 }}>
           <Typography variant="h6" gutterBottom>
-            Scan this QR Code to Mark Attendance:
+            Students: Scan this QR Code to mark attendance:
           </Typography>
-          <img src={qrCode} alt="QR Code" />
+          <QRCode value={qrCode} size={256} />
         </Box>
       )}
     </Box>
   );
 };
 
-export default TeacherComplain;
+export default AttendanceQRCode;

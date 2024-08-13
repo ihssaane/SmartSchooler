@@ -1,16 +1,9 @@
-const express = require('express');
-const router = express.Router();
+const mongoose = require('mongoose');
 
-// Mock database for demonstration purposes
-const attendanceRecords = [];
-
-router.post('/mark', (req, res) => {
-    const { studentName, rollNum, sessionId } = req.body;
-
-    // Save the attendance record (in a real application, save it to a database)
-    attendanceRecords.push({ studentName, rollNum, sessionId });
-    
-    res.status(200).json({ message: 'Attendance marked successfully' });
+const attendanceSchema = new mongoose.Schema({
+    sessionId: { type: String, required: true },
+    studentId: { type: String, required: true },
+    timestamp: { type: Date, default: Date.now }
 });
 
-module.exports = router;
+module.exports = mongoose.model('Attendance', attendanceSchema);
