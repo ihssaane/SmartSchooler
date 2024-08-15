@@ -3,13 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import {
   Grid,
   Paper,
-  Box,
   Container,
   CircularProgress,
   Backdrop,
+  Typography,
 } from '@mui/material';
-import { AccountCircle, School, Group } from '@mui/icons-material';
-import styled from 'styled-components';
+import { AdminPanelSettings, PersonOutline, SchoolOutlined } from '@mui/icons-material';
+import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../redux/userRelated/userHandle';
 import Popup from '../components/Popup';
@@ -74,85 +74,91 @@ const ChooseUser = ({ visitor }) => {
   }, [status, currentRole, navigate, currentUser]);
 
   return (
-    <StyledContainer>
-      <StyledInnerContainer>
-        <Grid container spacing={2} justifyContent="center">
-          <Grid item xs={12} sm={6} md={4}>
-            <div onClick={() => navigateHandler("Admin")}>
-              <StyledPaper elevation={3}>
-                <Box mb={2}>
-                  <AccountCircle fontSize="large" />
-                </Box>
-                <StyledTypography>Admin</StyledTypography>
-                Login as an administrator to access the dashboard to manage app data.
-              </StyledPaper>
-            </div>
+    <StyledBackground>
+      <StyledContainer>
+        <StyledPaper elevation={6}>
+          <Typography variant="h4" gutterBottom>
+            Choose Your Role
+          </Typography>
+          <Grid container spacing={4} justifyContent="center">
+            <Grid item xs={12} sm={4}>
+              <StyledCard onClick={() => navigateHandler("Admin")}>
+                <AdminPanelSettings sx={{ fontSize: 60 }} />
+                <Typography variant="h6">Admin</Typography>
+              </StyledCard>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <StyledCard onClick={() => navigateHandler("Student")}>
+                <PersonOutline sx={{ fontSize: 60 }} />
+                <Typography variant="h6">Student</Typography>
+              </StyledCard>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <StyledCard onClick={() => navigateHandler("Teacher")}>
+                <SchoolOutlined sx={{ fontSize: 60 }} />
+                <Typography variant="h6">Teacher</Typography>
+              </StyledCard>
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <StyledPaper elevation={3}>
-              <div onClick={() => navigateHandler("Student")}>
-                <Box mb={2}>
-                  <School fontSize="large" />
-                </Box>
-                <StyledTypography>Student</StyledTypography>
-                Login as a student to explore course materials and assignments.
-              </div>
-            </StyledPaper>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <StyledPaper elevation={3}>
-              <div onClick={() => navigateHandler("Teacher")}>
-                <Box mb={2}>
-                  <Group fontSize="large" />
-                </Box>
-                <StyledTypography>Teacher</StyledTypography>
-                Login as a teacher to create courses, assignments, and track student progress.
-              </div>
-            </StyledPaper>
-          </Grid>
-        </Grid>
-      </StyledInnerContainer>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={loader}
-      >
-        <CircularProgress color="inherit" />
-        Please Wait
-      </Backdrop>
-      <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
-    </StyledContainer>
+        </StyledPaper>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={loader}
+        >
+          <CircularProgress color="inherit" />
+          <Typography variant="body1" sx={{ ml: 2 }}>Please Wait</Typography>
+        </Backdrop>
+        <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
+      </StyledContainer>
+    </StyledBackground>
   );
 };
 
 export default ChooseUser;
 
-const StyledContainer = styled.div`
-  background: #050C9C;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+const StyledBackground = styled('div')(({ theme }) => ({
+  width: '100vw', // Largeur de la fenêtre du navigateur
+  height: '100vh', // Hauteur de la fenêtre du navigateur
+  background: `
+    linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main}),
+    repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px)
+  `,
+  backgroundAttachment: 'fixed',
+  backgroundSize: 'cover', // Assure que le fond couvre toute la zone
+}));
 
-const StyledInnerContainer = styled(Container)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+const StyledContainer = styled(Container)(({ theme }) => ({
+  minHeight: '100vh',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+}));
 
-const StyledPaper = styled(Paper)`
-  padding: 20px;
-  text-align: center;
-  background-color: #080a43;
-  color: rgba(53, 114, 239, 0.6);
-  cursor: pointer;
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(6),
+  borderRadius: theme.spacing(2),
+  textAlign: 'center',
+  backgroundColor: 'rgba(255, 255, 255, 0.9)',
+  backdropFilter: 'blur(10px)',
+}));
 
-  &:hover {
-    background-color: #3572EF;
-    color: white;
-  }
-`;
-
-const StyledTypography = styled.h2`
-  margin-bottom: 10px;
-`;
+const StyledCard = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(3),
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  cursor: 'pointer',
+  transition: 'all 0.3s ease-in-out',
+  backgroundColor: 'rgba(255, 255, 255, 0.7)',
+  width: '300px', // Définissez une largeur fixe en pixels
+  maxWidth: '300px', // Assure que le composant ne dépasse pas la largeur fixée
+  boxSizing: 'border-box',
+  '&:hover': {
+    transform: 'translateY(-10px)',
+    boxShadow: theme.shadows[10],
+    backgroundColor: theme.palette.primary.light,
+    '& .MuiSvgIcon-root, & .MuiTypography-root': {
+      color: theme.palette.primary.contrastText,
+    },
+  },
+}));

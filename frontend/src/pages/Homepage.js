@@ -1,88 +1,134 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Grid, Box, Button } from '@mui/material';
 import styled from 'styled-components';
 import Students from "../assets/Student.jpg";
-import { BlueButtonn } from '../components/buttonStyles';
 
 const Homepage = () => {
     return (
-        <StyledContainer>
-            <StyledContent>
-                <StyledTitle>
-                    Welcome to  SmartSchooler
-                   
-                </StyledTitle>
-                <StyledImage src={Students} alt="student" />
-                <StyledText>
-                    Elevate your educational experience with SmartSchooler, the ultimate School Management System designed to bring efficiency and simplicity to your school's operations. Our platform connects admins, teachers, and students in a seamless and intuitive environment.
-                </StyledText>
-                <StyledBox>
-                    <StyledLink to="/choose">
-                        <BlueButtonn variant="contained" fullWidth>
-                            Login
-                        </BlueButtonn>
-                    </StyledLink>
-                   
-                    <StyledText>
-                        Don't have an account?{' '}
-                        <Link to="/Adminregister" style={{ color: "#050C9C" }}>
-                            Sign up
-                        </Link>
-                    </StyledText>
-                </StyledBox>
-            </StyledContent>
-        </StyledContainer>
+        <PageWrapper>
+            <ContentContainer>
+                <LeftSection>
+                    <Logo>SmartSchooler</Logo>
+                    <Title>Manage Your School Intelligently</Title>
+                    <Description>
+                        Optimize your school operations with SmartSchooler. Our platform connects administrators, teachers, and students in an intuitive and efficient environment.
+                    </Description>
+                    <CTASection>
+                        <LoginButton to="/choose">Log In</LoginButton>
+                        <SignupText>
+                            Don't have an account yet? <SignupLink to="/Adminregister">Sign Up</SignupLink>
+                        </SignupText>
+                    </CTASection>
+                </LeftSection>
+                <RightSection>
+                    <ImageContainer>
+                        <StyledImage src={Students} alt="Students" />
+                    </ImageContainer>
+                </RightSection>
+            </ContentContainer>
+        </PageWrapper>
     );
 };
 
 export default Homepage;
 
-const StyledContainer = styled(Container)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+const PageWrapper = styled.div`
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f2f5;
 `;
 
-const StyledContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+const ContentContainer = styled.div`
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    background-color: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 `;
 
-const StyledTitle = styled.h1`
-  font-size: 3rem;
-  color: #252525;
-  font-weight: bold;
-  padding-top: 0;
-  letter-spacing: normal;
-  line-height: normal;
+const LeftSection = styled.div`
+    flex: 1;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`;
+
+const RightSection = styled.div`
+    flex: 1;
+    background-color: #e0e7ff;
+`;
+
+const Logo = styled.h2`
+    font-size: 24px;
+    color: #4338ca;
+    margin-bottom: 30px;
+`;
+
+const Title = styled.h1`
+    font-size: 48px;
+    color: #1f2937;
+    margin-bottom: 20px;
+    line-height: 1.2;
+`;
+
+const Description = styled.p`
+    font-size: 18px;
+    color: #6b7280;
+    margin-bottom: 40px;
+    line-height: 1.6;
+`;
+
+const CTASection = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+`;
+
+const LoginButton = styled(Link)`
+    background-color: #4338ca;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 18px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+
+    &:hover {
+        background-color: #3730a3;
+    }
+`;
+
+const SignupText = styled.p`
+    margin-top: 20px;
+    font-size: 16px;
+    color: #6b7280;
+`;
+
+const SignupLink = styled(Link)`
+    color: #4338ca;
+    text-decoration: none;
+    font-weight: bold;
+
+    &:hover {
+        text-decoration: underline;
+    }
+`;
+
+const ImageContainer = styled.div`
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 `;
 
 const StyledImage = styled.img`
-  width: 100%;
-  max-width: 600px; /* Adjust as needed */
-  margin-top: 20px;
-`;
-
-const StyledText = styled.p`
-  margin-top: 30px;
-  margin-bottom: 30px; 
-  letter-spacing: normal;
-  line-height: normal;
-`;
-
-const StyledBox = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding: 24px;
-`;
-
-const StyledLink = styled(Link)`
-  text-decoration: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 `;

@@ -1,217 +1,272 @@
-import * as React from 'react';
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Grid, Box, Typography, Paper, Checkbox, FormControlLabel, TextField, CssBaseline, IconButton, InputAdornment, CircularProgress} from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import bgpic from "../../assets/log.jpg"
-import { BlackButton, BlueButton } from '../../components/buttonStyles';
-import { registerUser } from '../../redux/userRelated/userHandle';
 import styled from 'styled-components';
+import { registerUser } from '../../redux/userRelated/userHandle';
 import Popup from '../../components/Popup';
-
-const defaultTheme = createTheme();
+import logoImage from '../../assets/logo.png';
 
 const AdminRegisterPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { status, currentUser, response, currentRole } = useSelector(state => state.user);
 
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+  const [formData, setFormData] = useState({
+    adminName: '',
+    schoolName: '',
+    email: '',
+    password: '',
+  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [message, setMessage] = useState("");
 
-    const { status, currentUser, response, error, currentRole } = useSelector(state => state.user);;
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    const [toggle, setToggle] = useState(false)
-    const [loader, setLoader] = useState(false)
-    const [showPopup, setShowPopup] = useState(false);
-    const [message, setMessage] = useState("");
-
-    const [emailError, setEmailError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
-    const [adminNameError, setAdminNameError] = useState(false);
-    const [schoolNameError, setSchoolNameError] = useState(false);
-    const role = "Admin"
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
-        const name = event.target.adminName.value;
-        const schoolName = event.target.schoolName.value;
-        const email = event.target.email.value;
-        const password = event.target.password.value;
-
-        if (!name || !schoolName || !email || !password) {
-            if (!name) setAdminNameError(true);
-            if (!schoolName) setSchoolNameError(true);
-            if (!email) setEmailError(true);
-            if (!password) setPasswordError(true);
-            return;
-        }
-
-        const fields = { name, email, password, role, schoolName }
-        setLoader(true)
-        dispatch(registerUser(fields, role))
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const fields = { 
+      name: formData.adminName, 
+      email: formData.email, 
+      password: formData.password, 
+      role: "Admin", 
+      schoolName: formData.schoolName 
     };
+    dispatch(registerUser(fields, "Admin"));
+  };
 
-    const handleInputChange = (event) => {
-        const { name } = event.target;
-        if (name === 'email') setEmailError(false);
-        if (name === 'password') setPasswordError(false);
-        if (name === 'adminName') setAdminNameError(false);
-        if (name === 'schoolName') setSchoolNameError(false);
-    };
+  useEffect(() => {
+    if (status === 'success' || (currentUser !== null && currentRole === 'Admin')) {
+      navigate('/Admin/dashboard');
+    } else if (status === 'failed') {
+      setMessage(response);
+      setShowPopup(true);
+      setLoading(false);
+    }
+  }, [status, currentUser, currentRole, navigate, response]);
 
-    useEffect(() => {
-        if (status === 'success' || (currentUser !== null && currentRole === 'Admin')) {
-            navigate('/Admin/dashboard');
-        }
-        else if (status === 'failed') {
-            setMessage(response)
-            setShowPopup(true)
-            setLoader(false)
-        }
-        else if (status === 'error') {
-            console.log(error)
-        }
-    }, [status, currentUser, currentRole, navigate, error, response]);
-
-    return (
-        <ThemeProvider theme={defaultTheme}>
-            <Grid container component="main" sx={{ height: '100vh' }}>
-                <CssBaseline />
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                    <Box
-                        sx={{
-                            my: 8,
-                            mx: 4,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Typography variant="h4" sx={{ mb: 2, color: "#2c2143" }}>
-                            Admin Register
-                        </Typography>
-                        <Typography variant="h7">
-                            Create your own school by registering as an admin.
-                            <br />
-                            You will be able to add students and faculty and
-                            manage the system.
-                        </Typography>
-                        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="adminName"
-                                label="Enter your name"
-                                name="adminName"
-                                autoComplete="name"
-                                autoFocus
-                                error={adminNameError}
-                                helperText={adminNameError && 'Name is required'}
-                                onChange={handleInputChange}
-                            />
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="schoolName"
-                                label="Create your school name"
-                                name="schoolName"
-                                autoComplete="off"
-                                error={schoolNameError}
-                                helperText={schoolNameError && 'School name is required'}
-                                onChange={handleInputChange}
-                            />
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Enter your email"
-                                name="email"
-                                autoComplete="email"
-                                error={emailError}
-                                helperText={emailError && 'Email is required'}
-                                onChange={handleInputChange}
-                            />
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type={toggle ? 'text' : 'password'}
-                                id="password"
-                                autoComplete="current-password"
-                                error={passwordError}
-                                helperText={passwordError && 'Password is required'}
-                                onChange={handleInputChange}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton onClick={() => setToggle(!toggle)}>
-                                                {toggle ? (
-                                                    <Visibility />
-                                                ) : (
-                                                    <VisibilityOff />
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                            <Grid container sx={{ display: "flex", justifyContent: "space-between" }}>
-                                <FormControlLabel
-                                    control={<Checkbox value="remember" color="primary" />}
-                                    label="Remember me"
-                                />
-                            </Grid>
-                            <BlackButton
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                            >
-                                {loader ? <CircularProgress size={24} color="inherit"/> : "Register"}
-                            </BlackButton>
-                            <Grid container>
-                                <Grid>
-                                    Already have an account?
-                                </Grid>
-                                <Grid item sx={{ ml: 2 }}>
-                                    <StyledLink to="/Adminlogin">
-                                        Log in
-                                    </StyledLink>
-                                </Grid>
-                            </Grid>
-                        </Box>
-                    </Box>
-                </Grid>
-                <Grid
-                    item
-                    xs={false}
-                    sm={4}
-                    md={7}
-                    sx={{
-                        backgroundImage: `url(${bgpic})`,
-                        backgroundRepeat: 'no-repeat',
-                        backgroundColor: (t) =>
-                            t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                    }}
+  return (
+    <PageContainer>
+      <ContentWrapper>
+        <LeftPanel>
+          <LogoImage src={logoImage} alt="SmartScooler Logo" />
+          <WelcomeText>Welcome to SmartScooler</WelcomeText>
+          <FeatureList>
+            <FeatureItem>✓ Management of teachers</FeatureItem>
+            <FeatureItem>✓ Management of Students</FeatureItem>
+            <FeatureItem>✓ Management of attendance</FeatureItem>
+          </FeatureList>
+        </LeftPanel>
+        <RightPanel>
+          <FormContainer>
+            <Title>Create Admin Account</Title>
+            <Form onSubmit={handleSubmit}>
+              <InputGroup>
+                <Label htmlFor="adminName">Your Name</Label>
+                <Input
+                  id="adminName"
+                  type="text"
+                  name="adminName"
+                  value={formData.adminName}
+                  onChange={handleChange}
+                  required
                 />
-            </Grid>
-            <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
-        </ThemeProvider>
-    );
-}
+              </InputGroup>
+              <InputGroup>
+                <Label htmlFor="schoolName">School Name</Label>
+                <Input
+                  id="schoolName"
+                  type="text"
+                  name="schoolName"
+                  value={formData.schoolName}
+                  onChange={handleChange}
+                  required
+                />
+              </InputGroup>
+              <InputGroup>
+                <Label htmlFor="email">Email Address</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </InputGroup>
+              <InputGroup>
+                <Label htmlFor="password">Password</Label>
+                <PasswordWrapper>
+                  <Input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                  />
+                  <TogglePassword onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? '🙈' : '👁️'}
+                  </TogglePassword>
+                </PasswordWrapper>
+              </InputGroup>
+              <SubmitButton type="submit" disabled={loading}>
+                {loading ? 'Creating Account...' : 'Create Account'}
+              </SubmitButton>
+            </Form>
+            <LoginLink>
+              Already have an account? <a href="/Adminlogin">Log in</a>
+            </LoginLink>
+          </FormContainer>
+        </RightPanel>
+      </ContentWrapper>
+      <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
+    </PageContainer>
+  );
+};
 
-export default AdminRegisterPage
+export default AdminRegisterPage;
 
-const StyledLink = styled(Link)`
-  margin-top: 9px;
-  text-decoration: none;
-  color: #7f56da;
+const PageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+`;
+
+const ContentWrapper = styled.div`
+  display: flex;
+  width: 1000px;
+  height: 600px;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+`;
+
+const LeftPanel = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+`;
+
+const LogoImage = styled.img`
+  width: 200px; // Adjust as needed
+  height: auto;
+  margin-bottom: 20px;
+`;
+
+const WelcomeText = styled.p`
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+`;
+
+const FeatureList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+`;
+
+const FeatureItem = styled.li`
+  margin-bottom: 15px;
+  font-size: 1rem;
+`;
+
+const RightPanel = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+`;
+
+const FormContainer = styled.div`
+  width: 100%;
+  max-width: 400px;
+`;
+
+const Title = styled.h2`
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
+
+const InputGroup = styled.div`
+  margin-bottom: 20px;
+`;
+
+const Label = styled.label`
+  display: block;
+  margin-bottom: 5px;
+  color: #666;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+`;
+
+const PasswordWrapper = styled.div`
+  position: relative;
+`;
+
+const TogglePassword = styled.span`
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+`;
+
+const SubmitButton = styled.button`
+  width: 100%;
+  padding: 12px;
+  background-color: #667eea;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #5a6eea;
+  }
+
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+`;
+
+const LoginLink = styled.p`
+  margin-top: 20px;
+  text-align: center;
+  color: #666;
+
+  a {
+    color: #667eea;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
