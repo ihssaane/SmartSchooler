@@ -1,9 +1,8 @@
-import { Container, Grid, Paper } from '@mui/material'
+import { Container, Grid, Paper } from '@mui/material';
 import SeeNotice from '../../components/SeeNotice';
-import Students from "../../assets/img1.png";
-import Classes from "../../assets/img2.png";
-import Teachers from "../../assets/img3.png";
-import Fees from "../../assets/img4.png";
+import Students from "../../assets/group.png";
+import Classes from "../../assets/training1.png";
+import Teachers from "../../assets/teacher11.png";
 import styled from 'styled-components';
 import CountUp from 'react-countup';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,9 +17,9 @@ const AdminHomePage = () => {
     const { sclassesList } = useSelector((state) => state.sclass);
     const { teachersList } = useSelector((state) => state.teacher);
 
-    const { currentUser } = useSelector(state => state.user)
+    const { currentUser } = useSelector(state => state.user);
 
-    const adminID = currentUser._id
+    const adminID = currentUser._id;
 
     useEffect(() => {
         dispatch(getAllStudents(adminID));
@@ -35,64 +34,76 @@ const AdminHomePage = () => {
     return (
         <>
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                <Grid container spacing={3}>
-                    <Grid item xs={12} md={3} lg={3}>
+                <Grid container spacing={4}>
+                    <Grid item xs={12} md={6} lg={4}>
                         <StyledPaper>
                             <img src={Students} alt="Students" />
                             <Title>
-                                Total Students
+                                Students
                             </Title>
                             <Data start={0} end={numberOfStudents} duration={2.5} />
                         </StyledPaper>
                     </Grid>
-                    <Grid item xs={12} md={3} lg={3}>
+                    <Grid item xs={12} md={6} lg={4}>
                         <StyledPaper>
                             <img src={Classes} alt="Classes" />
                             <Title>
-                                Total Classes
+                                Classes
                             </Title>
                             <Data start={0} end={numberOfClasses} duration={5} />
                         </StyledPaper>
                     </Grid>
-                    <Grid item xs={12} md={3} lg={3}>
+                    <Grid item xs={12} md={6} lg={4}>
                         <StyledPaper>
                             <img src={Teachers} alt="Teachers" />
                             <Title>
-                                Total Teachers
+                                Teachers
                             </Title>
                             <Data start={0} end={numberOfTeachers} duration={2.5} />
                         </StyledPaper>
                     </Grid>
-                    
-                    <Grid item xs={12} md={12} lg={12}>
-                        <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                    <Grid item xs={12}>
+                        <StyledPaper variant="outlined" elevation={0}>
                             <SeeNotice />
-                        </Paper>
+                        </StyledPaper>
                     </Grid>
                 </Grid>
             </Container>
         </>
     );
 };
+const StyledPaper = styled(Paper)(({ theme }) => ({
+    padding: '32px', /* Increased padding for more space */
+    display: 'flex',
+    flexDirection: 'column',
+    height: '300px', /* Increased height for better layout */
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    borderRadius: '50%', /* Fully rounded corners */
+    boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)', /* Softer shadow */
+    background: 'linear-gradient(135deg, #3a6073 0%, #16222a 100%)', /* Darker gradient */
+    color: '#f4f4f4',
+    
 
-
-const StyledPaper = styled(Paper)`
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  height: 200px;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
-`;
+    '&:hover': {
+        transform: 'translateY(-10px)', /* Lift effect on hover */
+        boxShadow: '0 12px 24px rgba(0, 0, 0, 0.2)', /* Enhanced shadow on hover */
+    },
+}));
 
 const Title = styled.p`
-  font-size: 1.25rem;
+  font-size: 1.75rem; /* Slightly increased font size */
+  font-weight: 700; /* Bolder text */
+  margin: 20px 0;
+  color: #e1e1e1; /* Lighter text color */
+  text-transform: uppercase; /* Text in uppercase */
 `;
 
 const Data = styled(CountUp)`
-  font-size: calc(1.3rem + .6vw);
-  color: green;
+  font-size: 2.5rem; /* Increased font size */
+  font-weight: 800; /* Extra bold font weight */
+  color: #ffcc00; /* Changed text color for emphasis */
 `;
 
-export default AdminHomePage
+export default AdminHomePage;

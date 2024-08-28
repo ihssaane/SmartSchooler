@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { StyledTableCell, StyledTableRow } from './styles';
 import { Table, TableBody, TableContainer, TableHead, TablePagination } from '@mui/material';
 
 const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows }) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+
     return (
         <>
             <TableContainer>
@@ -15,12 +16,17 @@ const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows }) => {
                                 <StyledTableCell
                                     key={column.id}
                                     align={column.align}
-                                    style={{ minWidth: column.minWidth }}
+                                    style={{
+                                        minWidth: column.minWidth,
+                                        backgroundColor: '#f5f5f5', // Header background color
+                                        color: '#333', // Header text color
+                                        fontWeight: 'bold'
+                                    }}
                                 >
                                     {column.label}
                                 </StyledTableCell>
                             ))}
-                            <StyledTableCell align="center">
+                            <StyledTableCell align="center" style={{ backgroundColor: '#f5f5f5', color: '#333', fontWeight: 'bold' }}>
                                 Actions
                             </StyledTableCell>
                         </StyledTableRow>
@@ -30,7 +36,15 @@ const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows }) => {
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row) => {
                                 return (
-                                    <StyledTableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                                    <StyledTableRow hover role="checkbox" tabIndex={-1} key={row.id}
+                                        style={{
+                                            backgroundColor: '#fff', // Default row background color
+                                            color: '#333', // Default row text color
+                                            '&:nth-of-type(odd)': {
+                                                backgroundColor: '#f9f9f9' // Alternate row color
+                                            }
+                                        }}
+                                    >
                                         {columns.map((column) => {
                                             const value = row[column.id];
                                             return (
@@ -60,12 +74,12 @@ const TableTemplate = ({ buttonHaver: ButtonHaver, columns, rows }) => {
                 page={page}
                 onPageChange={(event, newPage) => setPage(newPage)}
                 onRowsPerPageChange={(event) => {
-                    setRowsPerPage(parseInt(event.target.value, 5));
+                    setRowsPerPage(parseInt(event.target.value, 10)); // Fixed the radix parameter
                     setPage(0);
                 }}
             />
         </>
-    )
+    );
 }
 
-export default TableTemplate
+export default TableTemplate;

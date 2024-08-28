@@ -110,7 +110,7 @@ const AdminRegisterPage = () => {
                     required
                   />
                   <TogglePassword onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? '🙈' : '👁️'}
+                   
                   </TogglePassword>
                 </PasswordWrapper>
               </InputGroup>
@@ -136,7 +136,7 @@ const PageContainer = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(109.6deg, rgb(0, 0, 0) 11.2%, rgb(11, 132, 145) 91.1%)
 `;
 
 const ContentWrapper = styled.div`
@@ -156,7 +156,7 @@ const LeftPanel = styled.div`
   justify-content: center;
   align-items: flex-start;
   padding: 60px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ background: linear-gradient(109.6deg, rgb(0, 0, 0) 11.2%, rgb(11, 132, 145) 91.1%);
   color: white;
 `;
 
@@ -238,7 +238,7 @@ const TogglePassword = styled.span`
 const SubmitButton = styled.button`
   width: 100%;
   padding: 12px;
-  background-color: #667eea;
+  background: linear-gradient(109.6deg, rgb(0, 0, 0) 11.2%, rgb(11, 132, 145) 91.1%);
   color: white;
   border: none;
   border-radius: 4px;
@@ -259,10 +259,10 @@ const SubmitButton = styled.button`
 const LoginLink = styled.p`
   margin-top: 20px;
   text-align: center;
-  color: #666;
+  color: #31665F;
 
   a {
-    color: #667eea;
+    color: #31665F;
     text-decoration: none;
 
     &:hover {

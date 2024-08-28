@@ -87,7 +87,7 @@ const LoginPage = ({ role }) => {
             required
           />
           <TogglePassword onClick={() => setShowPassword(!showPassword)}>
-            {showPassword ? '🙈' : '👁️'}
+           
           </TogglePassword>
         </PasswordWrapper>
         <SubmitButton type="submit" disabled={loading}>
@@ -111,7 +111,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
+ background: linear-gradient(109.6deg, rgb(0, 0, 0) 11.2%, rgb(11, 132, 145) 91.1%);
 `;
 
 const LoginForm = styled.form`
@@ -153,7 +153,7 @@ const TogglePassword = styled.span`
 const SubmitButton = styled.button`
   width: 100%;
   padding: 10px;
-  background-color: #6e8efb;
+  background: linear-gradient(109.6deg, rgb(0, 0, 0) 11.2%, rgb(11, 132, 145) 91.1%);
   color: white;
   border: none;
   border-radius: 4px;
@@ -176,7 +176,7 @@ const SignUpLink = styled.p`
   margin-top: 1rem;
 
   a {
-    color: #6e8efb;
+    color: #31665F;
     text-decoration: none;
 
     &:hover {

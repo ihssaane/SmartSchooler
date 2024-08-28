@@ -6,7 +6,6 @@ import styled from 'styled-components';
 
 const Logout = () => {
     const currentUser = useSelector(state => state.user.currentUser);
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -22,7 +21,7 @@ const Logout = () => {
     return (
         <LogoutContainer>
             <h1>{currentUser.name}</h1>
-            <LogoutMessage>Are you sure you want to log out?</LogoutMessage>
+            <LogoutMessage>You want to logout?</LogoutMessage>
             <LogoutButtonLogout onClick={handleLogout}>Log Out</LogoutButtonLogout>
             <LogoutButtonCancel onClick={handleCancel}>Cancel</LogoutButtonCancel>
         </LogoutContainer>
@@ -40,8 +39,8 @@ const LogoutContainer = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
-  background-color: #85769f66;
-  color: black;
+  background: linear-gradient(109.6deg, rgb(0, 0, 0) 11.2%, rgb(11, 132, 145) 91.1%);
+  color: white;
 `;
 
 const LogoutMessage = styled.p`
@@ -57,10 +56,12 @@ const LogoutButton = styled.button`
   font-size: 16px;
   color: #fff;
   cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
 
   &:hover {
-    color: #fff;
-    background-color: #333;
+    opacity: 0.8;
+    transform: translateY(-2px);
   }
 `;
 

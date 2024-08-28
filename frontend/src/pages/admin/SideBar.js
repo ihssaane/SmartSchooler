@@ -1,85 +1,98 @@
 import * as React from 'react';
 import { Divider, ListItemButton, ListItemIcon, ListItemText, ListSubheader } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
+import { styled } from '@mui/material/styles';
 
-import HomeIcon from "@mui/icons-material/Home";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import AnnouncementOutlinedIcon from '@mui/icons-material/AnnouncementOutlined';
-import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined';
-import SupervisorAccountOutlinedIcon from '@mui/icons-material/SupervisorAccountOutlined';
-import ReportIcon from '@mui/icons-material/Report';
-import AssignmentIcon from '@mui/icons-material/Assignment';
+// Importing icons from Material-UI
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import GroupIcon from '@mui/icons-material/Group';
+import SchoolIcon from '@mui/icons-material/School';
+import PersonIcon from '@mui/icons-material/Person';
+import AnnouncementIcon from '@mui/icons-material/Announcement';
+import AssignmentIcon from '@mui/icons-material/Assignment'; // Importing AssignmentIcon
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'; // Importing AccountCircleOutlinedIcon
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 const SideBar = () => {
     const location = useLocation();
+
     return (
         <>
             <React.Fragment>
-                <ListItemButton component={Link} to="/">
+                <CustomListItemButton component={Link} to="/" selected={location.pathname === ("/" || "/Admin/dashboard")}>
                     <ListItemIcon>
-                        <HomeIcon color={location.pathname === ("/" || "/Admin/dashboard") ? 'primary' : 'inherit'} />
+                        <DashboardIcon color={location.pathname === ("/" || "/Admin/dashboard") ? 'primary' : 'inherit'} />
                     </ListItemIcon>
-                    <ListItemText primary="Home" />
-                </ListItemButton>
-                <ListItemButton component={Link} to="/Admin/classes">
+                    <ListItemText primary="Dashboard" />
+                </CustomListItemButton>
+                <CustomListItemButton component={Link} to="/Admin/classes" selected={location.pathname.startsWith('/Admin/classes')}>
                     <ListItemIcon>
-                        <ClassOutlinedIcon color={location.pathname.startsWith('/Admin/classes') ? 'primary' : 'inherit'} />
+                        <SchoolIcon color={location.pathname.startsWith('/Admin/classes') ? 'primary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Classes" />
-                </ListItemButton>
-                <ListItemButton component={Link} to="/Admin/subjects">
+                </CustomListItemButton>
+                <CustomListItemButton component={Link} to="/Admin/subjects" selected={location.pathname.startsWith('/Admin/subjects')}>
                     <ListItemIcon>
                         <AssignmentIcon color={location.pathname.startsWith("/Admin/subjects") ? 'primary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Subjects" />
-                </ListItemButton>
-                <ListItemButton component={Link} to="/Admin/teachers">
+                </CustomListItemButton>
+                <CustomListItemButton component={Link} to="/Admin/teachers" selected={location.pathname.startsWith('/Admin/teachers')}>
                     <ListItemIcon>
-                        <SupervisorAccountOutlinedIcon color={location.pathname.startsWith("/Admin/teachers") ? 'primary' : 'inherit'} />
+                        <GroupIcon color={location.pathname.startsWith("/Admin/teachers") ? 'primary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Teachers" />
-                </ListItemButton>
-                <ListItemButton component={Link} to="/Admin/students">
+                </CustomListItemButton>
+                <CustomListItemButton component={Link} to="/Admin/students" selected={location.pathname.startsWith('/Admin/students')}>
                     <ListItemIcon>
-                        <PersonOutlineIcon color={location.pathname.startsWith("/Admin/students") ? 'primary' : 'inherit'} />
+                        <PersonIcon color={location.pathname.startsWith("/Admin/students") ? 'primary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Students" />
-                </ListItemButton>
-                <ListItemButton component={Link} to="/Admin/notices">
+                </CustomListItemButton>
+                <CustomListItemButton component={Link} to="/Admin/notices" selected={location.pathname.startsWith('/Admin/notices')}>
                     <ListItemIcon>
-                        <AnnouncementOutlinedIcon color={location.pathname.startsWith("/Admin/notices") ? 'primary' : 'inherit'} />
+                        <AnnouncementIcon color={location.pathname.startsWith("/Admin/notices") ? 'primary' : 'inherit'} />
                     </ListItemIcon>
-                    <ListItemText primary="Notices" />
-                </ListItemButton>
-                <ListItemButton component={Link} to="/Admin/complains">
-                    <ListItemIcon>
-                        <ReportIcon color={location.pathname.startsWith("/Admin/complains") ? 'primary' : 'inherit'} />
-                    </ListItemIcon>
-                    <ListItemText primary="Complains" />
-                </ListItemButton>
+                    <ListItemText primary="Announcement" />
+                </CustomListItemButton>
             </React.Fragment>
-            <Divider sx={{ my: 1 }} />
+            <Divider sx={{ my: 2, borderColor: 'rgba(255, 255, 255, 0.12)' }} />
             <React.Fragment>
-                <ListSubheader component="div" inset>
+                <ListSubheader component="div" inset sx={{ color: '#ffffff', fontWeight: 'bold', letterSpacing: '1px' }}>
                     User
                 </ListSubheader>
-                <ListItemButton component={Link} to="/Admin/profile">
+                <CustomListItemButton component={Link} to="/Admin/profile" selected={location.pathname.startsWith('/Admin/profile')}>
                     <ListItemIcon>
                         <AccountCircleOutlinedIcon color={location.pathname.startsWith("/Admin/profile") ? 'primary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Profile" />
-                </ListItemButton>
-                <ListItemButton component={Link} to="/logout">
+                </CustomListItemButton>
+                <CustomListItemButton component={Link} to="/logout" selected={location.pathname.startsWith('/logout')}>
                     <ListItemIcon>
                         <ExitToAppIcon color={location.pathname.startsWith("/logout") ? 'primary' : 'inherit'} />
                     </ListItemIcon>
                     <ListItemText primary="Logout" />
-                </ListItemButton>
+                </CustomListItemButton>
             </React.Fragment>
         </>
-    )
+    );
 }
 
-export default SideBar
+const CustomListItemButton = styled(ListItemButton)(({ theme, selected }) => ({
+    borderRadius: '8px', /* Rounded corners */
+    marginBottom: '8px', /* Space between items */
+    background: selected ? 'linear-gradient(109.6deg, rgb(0, 0, 0) 11.2%, rgb(11, 132, 145) 91.1%)' : 'inherit', /* Gradient background for selected items */
+    color: selected ? theme.palette.primary.contrastText : 'inherit', /* Text color for selected items */
+    '& .MuiListItemIcon-root': {
+        color: selected ? theme.palette.primary.contrastText : 'inherit', /* Icon color for selected items */
+    },
+    '&:hover': {
+        backgroundColor: theme.palette.action.hover, /* Hover background color */
+        color: theme.palette.primary.main, /* Text color on hover */
+        '& .MuiListItemIcon-root': {
+            color: theme.palette.primary.main, /* Icon color on hover */
+        },
+    },
+}));
+
+export default SideBar;

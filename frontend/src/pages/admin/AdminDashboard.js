@@ -7,6 +7,7 @@ import {
     Typography,
     Divider,
     IconButton,
+    useTheme
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -42,8 +43,12 @@ import ClassDetails from './classRelated/ClassDetails';
 import ShowClasses from './classRelated/ShowClasses';
 import AccountMenu from '../../components/AccountMenu';
 
+const drawerWidth = 240; // Définir drawerWidth ici
+
 const AdminDashboard = () => {
     const [open, setOpen] = useState(false);
+    const theme = useTheme(); // Utiliser le hook useTheme pour accéder au thème
+
     const toggleDrawer = () => {
         setOpen(!open);
     };
@@ -52,8 +57,8 @@ const AdminDashboard = () => {
         <>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-                <AppBar open={open} position='absolute'>
-                    <Toolbar sx={{ pr: '24px' }}>
+                <AppBar open={open} position='fixed' sx={styles.appBar}>
+                    <Toolbar sx={styles.toolbar}>
                         <IconButton
                             edge="start"
                             color="inherit"
@@ -68,18 +73,18 @@ const AdminDashboard = () => {
                         </IconButton>
                         <Typography
                             component="h1"
-                            variant="h6"
+                            variant="h4" // Augmenter la taille de la police
                             color="inherit"
                             noWrap
-                            sx={{ flexGrow: 1 }}
+                            sx={styles.title} // Utiliser les styles personnalisés pour le titre
                         >
                             Admin Dashboard
                         </Typography>
                         <AccountMenu />
                     </Toolbar>
                 </AppBar>
-                <Drawer variant="permanent" open={open} sx={open ? styles.drawerStyled : styles.hideDrawer}>
-                    <Toolbar sx={styles.toolBarStyled}>
+                <Drawer variant="permanent" open={open} sx={open ? styles.drawerOpen : styles.drawerClose(theme)}>
+                    <Toolbar sx={styles.toolbar}>
                         <IconButton onClick={toggleDrawer}>
                             <ChevronLeftIcon />
                         </IconButton>
@@ -89,7 +94,7 @@ const AdminDashboard = () => {
                         <SideBar />
                     </List>
                 </Drawer>
-                <Box component="main" sx={styles.boxStyled}>
+                <Box component="main" sx={styles.content(theme)}>
                     <Toolbar />
                     <Routes>
                         <Route path="/" element={<AdminHomePage />} />
@@ -142,31 +147,57 @@ const AdminDashboard = () => {
     );
 }
 
-export default AdminDashboard
+export default AdminDashboard;
 
 const styles = {
-    boxStyled: {
-        backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
+    appBar: {
+        background: 'linear-gradient(109.6deg, rgb(0, 0, 0) 11.2%, rgb(11, 132, 145) 91.1%)', // Dégradé de couleur pour la barre d'application
+        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Ombre douce
+        height: '70px', // Hauteur augmentée
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center', // Centrer le contenu horizontalement
+        transition: 'all 0.3s ease',
+    },
+    title: {
+        flexGrow: 1,
+        fontWeight: 'bold',
+        fontSize: '1.8rem', // Taille de police augmentée
+        fontFamily: `'Roboto', sans-serif`, // Police de caractères personnalisée
+        textAlign: 'center', // Centrer le texte
+        marginLeft: '0px', // Réinitialiser la marge à gauche pour centrer le texte
+        letterSpacing: '1.2px', // Espacement des lettres
+        textTransform: 'uppercase', // Transformer le texte en majuscules
+    },
+    content: (theme) => ({
+        backgroundColor: theme.palette.mode === 'light'
+            ? theme.palette.grey[100]
+            : theme.palette.grey[900],
         flexGrow: 1,
         height: '100vh',
         overflow: 'auto',
-    },
-    toolBarStyled: {
+        padding: '24px',
+        transition: 'all 0.3s ease', // Transition douce pour la zone de contenu principale
+    }),
+    toolbar: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'flex-end',
-        px: [1],
+        justifyContent: 'space-between',  // Alignement mis à jour pour un meilleur espacement
+        padding: '0 16px',  // Ajout de padding pour l'espacement
     },
-    drawerStyled: {
-        display: "flex"
+    drawerOpen: {
+        width: drawerWidth,
+        flexShrink: 0,
+        whiteSpace: 'nowrap',
+        boxSizing: 'border-box',
+        transition: 'width 0.3s ease', // Transition douce pour l'ouverture du tiroir
     },
-    hideDrawer: {
-        display: 'flex',
-        '@media (max-width: 600px)': {
-            display: 'none',
+    drawerClose: (theme) => ({
+        overflowX: 'hidden',
+        width: theme.spacing(7) + 1,
+        transition: 'width 0.3s ease', // Transition douce pour la fermeture du tiroir
+        [theme.breakpoints.up('sm')]: {
+            width: theme.spacing(9) + 1,
         },
-    },
-}
+    }),
+};

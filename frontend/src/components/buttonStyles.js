@@ -51,10 +51,10 @@ export const BlueButton = styled(Button)`
 
 export const PurpleButton = styled(Button)`
   && {
-    background-color: #270843;
+    background-color: #40773E;
     color: #fff;
     &:hover {
-      background-color: #3f1068;
+      background-color: #274626;
     }
   }
 `;
@@ -71,7 +71,7 @@ export const BlueButtonn = styled(Button)`
 
 export const GreenButton = styled(Button)`
   && {
-    background-color: #133104;
+    background: linear-gradient(109.6deg, rgb(0, 0, 0) 11.2%, rgb(11, 132, 145) 91.1%);
     color: #fff;
     &:hover {
       background-color: #266810;

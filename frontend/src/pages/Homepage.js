@@ -65,7 +65,7 @@ const RightSection = styled.div`
 
 const Logo = styled.h2`
     font-size: 24px;
-    color: #4338ca;
+    color: #31665F;
     margin-bottom: 30px;
 `;
 
@@ -90,7 +90,7 @@ const CTASection = styled.div`
 `;
 
 const LoginButton = styled(Link)`
-    background-color: #4338ca;
+    background: linear-gradient(109.6deg, rgb(0, 0, 0) 11.2%, rgb(11, 132, 145) 91.1%);
     color: white;
     padding: 12px 24px;
     border-radius: 8px;
@@ -110,7 +110,7 @@ const SignupText = styled.p`
 `;
 
 const SignupLink = styled(Link)`
-    color: #4338ca;
+    color: #31665F;
     text-decoration: none;
     font-weight: bold;
 

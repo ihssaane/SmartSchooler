@@ -116,30 +116,28 @@ const ChooseUser = ({ visitor }) => {
 
 export default ChooseUser;
 
-const StyledBackground = styled('div')(({ theme }) => ({
-  width: '100vw', // Largeur de la fenêtre du navigateur
-  height: '100vh', // Hauteur de la fenêtre du navigateur
-  background: `
-    linear-gradient(135deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main}),
-    repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px)
-  `,
+const StyledBackground = styled('div')({
+  width: '100vw',
+  height: '100vh',
+  background: 'linear-gradient(109.6deg, rgb(0, 0, 0) 11.2%, rgb(11, 132, 145) 91.1%)',
   backgroundAttachment: 'fixed',
-  backgroundSize: 'cover', // Assure que le fond couvre toute la zone
-}));
+  backgroundSize: 'cover',
+});
 
-const StyledContainer = styled(Container)(({ theme }) => ({
+const StyledContainer = styled(Container)({
   minHeight: '100vh',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-}));
+});
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(6),
   borderRadius: theme.spacing(2),
   textAlign: 'center',
-  backgroundColor: 'rgba(255, 255, 255, 0.9)',
+  backgroundColor: 'rgba(255, 255, 255, 0.1)',
   backdropFilter: 'blur(10px)',
+  color: 'white',
 }));
 
 const StyledCard = styled(Paper)(({ theme }) => ({
@@ -149,16 +147,14 @@ const StyledCard = styled(Paper)(({ theme }) => ({
   alignItems: 'center',
   cursor: 'pointer',
   transition: 'all 0.3s ease-in-out',
-  backgroundColor: 'rgba(255, 255, 255, 0.7)',
-  width: '300px', // Définissez une largeur fixe en pixels
-  maxWidth: '300px', // Assure que le composant ne dépasse pas la largeur fixée
+  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  width: '300px',
+  maxWidth: '300px',
   boxSizing: 'border-box',
+  color: 'white',
   '&:hover': {
     transform: 'translateY(-10px)',
     boxShadow: theme.shadows[10],
-    backgroundColor: theme.palette.primary.light,
-    '& .MuiSvgIcon-root, & .MuiTypography-root': {
-      color: theme.palette.primary.contrastText,
-    },
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
   },
 }));

@@ -1,120 +1,169 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, CircularProgress, Stack, TextField } from "@mui/material";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addStuff } from '../../../redux/userRelated/userHandle';
 import { underControl } from '../../../redux/userRelated/userSlice';
-import { BlueButton } from "../../../components/buttonStyles";
 import Popup from "../../../components/Popup";
-import Classroom from "../../../assets/classroom.png";
 import styled from "styled-components";
 
 const AddClass = () => {
     const [sclassName, setSclassName] = useState("");
-
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-
-    const userState = useSelector(state => state.user);
-    const { status, currentUser, response, error, tempDetails } = userState;
-
-    const adminID = currentUser._id
-    const address = "Sclass"
-
-    const [loader, setLoader] = useState(false)
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { status, currentUser, response, tempDetails } = useSelector(state => state.user);
+    const [loader, setLoader] = useState(false);
     const [message, setMessage] = useState("");
     const [showPopup, setShowPopup] = useState(false);
 
-    const fields = {
-        sclassName,
-        adminID,
-    };
-
     const submitHandler = (event) => {
-        event.preventDefault()
-        setLoader(true)
-        dispatch(addStuff(fields, address))
+        event.preventDefault();
+        setLoader(true);
+        dispatch(addStuff({ sclassName, adminID: currentUser._id }, "Sclass"));
     };
 
     useEffect(() => {
         if (status === 'added' && tempDetails) {
-            navigate("/Admin/classes/class/" + tempDetails._id)
-            dispatch(underControl())
-            setLoader(false)
+            navigate("/Admin/classes/class/" + tempDetails._id);
+            dispatch(underControl());
+            setLoader(false);
+        } else if (status === 'failed' || status === 'error') {
+            setMessage(status === 'failed' ? response : "Network Error");
+            setShowPopup(true);
+            setLoader(false);
         }
-        else if (status === 'failed') {
-            setMessage(response)
-            setShowPopup(true)
-            setLoader(false)
-        }
-        else if (status === 'error') {
-            setMessage("Network Error")
-            setShowPopup(true)
-            setLoader(false)
-        }
-    }, [status, navigate, error, response, dispatch, tempDetails]);
+    }, [status, navigate, response, dispatch, tempDetails]);
+
     return (
-        <>
-            <StyledContainer>
-                <StyledBox>
-                    <Stack sx={{
-                        alignItems: 'center',
-                        mb: 3
-                    }}>
-                        <img
-                            src={Classroom}
-                            alt="classroom"
-                            style={{ width: '80%' }}
-                        />
-                    </Stack>
-                    <form onSubmit={submitHandler}>
-                        <Stack spacing={3}>
-                            <TextField
-                                label="Create a class"
-                                variant="outlined"
-                                value={sclassName}
-                                onChange={(event) => {
-                                    setSclassName(event.target.value);
-                                }}
-                                required
-                            />
-                            <BlueButton
-                                fullWidth
-                                size="large"
-                                sx={{ mt: 3 }}
-                                variant="contained"
-                                type="submit"
-                                disabled={loader}
-                            >
-                                {loader ? <CircularProgress size={24} color="inherit" /> : "Create"}
-                            </BlueButton>
-                            <Button variant="outlined" onClick={() => navigate(-1)}>
-                                Go Back
-                            </Button>
-                        </Stack>
-                    </form>
-                </StyledBox>
-            </StyledContainer>
+        <Container>
+            <FormWrapper onSubmit={submitHandler}>
+                <Title>Create a New Class</Title>
+                <InputWrapper>
+                    <StyledInput
+                        type="text"
+                        placeholder="Enter class name"
+                        value={sclassName}
+                        onChange={(e) => setSclassName(e.target.value)}
+                        required
+                    />
+                    <InputBorder />
+                </InputWrapper>
+                <ButtonGroup>
+                    <SubmitButton type="submit" disabled={loader}>
+                        {loader ? "Creating..." : "Create Class"}
+                    </SubmitButton>
+                    <BackButton onClick={() => navigate(-1)}>Go Back</BackButton>
+                </ButtonGroup>
+            </FormWrapper>
             <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
-        </>
-    )
-}
+        </Container>
+    );
+};
 
-export default AddClass
+export default AddClass;
 
-const StyledContainer = styled(Box)`
-  flex: 1 1 auto;
-  align-items: center;
-  display: flex;
-  justify-content: center;
+const Container = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(109.6deg, rgb(0, 0, 0) 11.2%, rgb(11, 132, 145) 91.1%);
 `;
 
-const StyledBox = styled(Box)`
-  max-width: 550px;
-  padding: 50px 3rem 50px;
-  margin-top: 1rem;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  border: 1px solid #ccc;
-  border-radius: 4px;
+const FormWrapper = styled.form`
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    width: 100%;
+    max-width: 400px;
+`;
+
+const Title = styled.h2`
+    text-align: center;
+    color: white;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+`;
+
+const InputWrapper = styled.div`
+    position: relative;
+    margin-bottom: 2rem;
+`;
+
+const StyledInput = styled.input`
+    width: 100%;
+    padding: 0.75rem;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+
+    &:focus {
+        outline: none;
+        border-color: white;
+    }
+
+    &::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+    }
+`;
+
+const InputBorder = styled.span`
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s;
+
+    ${StyledInput}:focus + & {
+        width: 100%;
+    }
+`;
+
+const ButtonGroup = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+`;
+
+const Button = styled.button`
+    padding: 0.75rem;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+`;
+
+const SubmitButton = styled(Button)`
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    &:disabled {
+        background-color: rgba(255, 255, 255, 0.1);
+        cursor: not-allowed;
+    }
+`;
+
+const BackButton = styled(Button)`
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
 `;
