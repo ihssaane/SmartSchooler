@@ -119,13 +119,13 @@ const AddStudent = ({ situation }) => {
                 )}
                 <InputWrapper>
                     <StyledInput
-                        type="number"
-                        placeholder="Enter student's  Number"
+                        type="text"
+                        placeholder="Enter student's  CNE"
                         value={rollNum}
                         onChange={(event) => setRollNum(event.target.value)}
                         required
                     />
-                    <InputLabel> Number</InputLabel>
+                    <InputLabel> CNE</InputLabel>
                 </InputWrapper>
                 <InputWrapper>
                     <StyledInput

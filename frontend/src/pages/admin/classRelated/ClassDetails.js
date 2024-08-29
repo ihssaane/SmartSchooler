@@ -126,7 +126,7 @@ const ClassDetails = () => {
 
     const studentColumns = [
         { id: 'name', label: 'Name', minWidth: 170 },
-        { id: 'rollNum', label: 'Roll Number', minWidth: 100 },
+        { id: 'rollNum', label: 'CNE', minWidth: 100 },
     ]
 
     const studentRows = sclassStudents.map((student) => {

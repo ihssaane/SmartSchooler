@@ -9,7 +9,7 @@ import {
 
 const drawerWidth = 240;
 
-// Custom styled TableCell with updated styles
+
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.primary.dark, // Darker primary color for header
@@ -28,7 +28,7 @@ export const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
 }));
 
-// Custom styled TableRow with updated styles
+
 export const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
         backgroundColor: theme.palette.action.hover, // Light background for odd rows

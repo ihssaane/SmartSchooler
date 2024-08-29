@@ -153,7 +153,7 @@ const ViewStudent = () => {
                             <StyledTableRow>
                                 <StyledTableCell>Subject</StyledTableCell>
                                 <StyledTableCell>Present</StyledTableCell>
-                                <StyledTableCell>Total Sessions</StyledTableCell>
+                               
                                 <StyledTableCell>Attendance Percentage</StyledTableCell>
                                 <StyledTableCell align="center">Actions</StyledTableCell>
                             </StyledTableRow>
@@ -165,7 +165,7 @@ const ViewStudent = () => {
                                     <StyledTableRow>
                                         <StyledTableCell>{subName}</StyledTableCell>
                                         <StyledTableCell>{present}</StyledTableCell>
-                                        <StyledTableCell>{sessions}</StyledTableCell>
+                                        
                                         <StyledTableCell>{subjectAttendancePercentage}%</StyledTableCell>
                                         <StyledTableCell align="center">
                                             <Button variant="contained"
@@ -220,7 +220,7 @@ const ViewStudent = () => {
                         )}
                     </Table>
                     <div>
-                        Overall Attendance Percentage: {overallAttendancePercentage.toFixed(2)}%
+                         Attendance Percentage: {overallAttendancePercentage.toFixed(2)}%
                     </div>
                     <Button variant="contained" color="error" startIcon={<DeleteIcon />} onClick={() => removeHandler(studentID, "RemoveStudentAtten")}>Delete All</Button>
                     <Button variant="contained" sx={styles.styledButton} onClick={() => navigate("/Admin/students/student/attendance/" + studentID)}>
@@ -344,7 +344,7 @@ const ViewStudent = () => {
             <div>
                 Name: {userDetails.name}
                 <br />
-                Roll Number: {userDetails.rollNum}
+                CNE: {userDetails.rollNum}
                 <br />
                 Class: {sclassName.sclassName}
                 <br />

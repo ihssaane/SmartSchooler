@@ -116,19 +116,7 @@ const SubjectForm = () => {
                                 required
                             />
                         </Grid>
-                        <Grid item xs={4}>
-                            <TextField
-                                fullWidth
-                                label="Sessions"
-                                variant="outlined"
-                                type="number"
-                                inputProps={{ min: 0 }}
-                                value={subject.sessions}
-                                onChange={handleSessionsChange(index)}
-                                sx={styles.inputField}
-                                required
-                            />
-                        </Grid>
+                            
                         <Grid item xs={6}>
                             <Box display="flex" alignItems="flex-end">
                                 {index === 0 ? (

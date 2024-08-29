@@ -43,7 +43,7 @@ const ViewSubject = () => {
   };
 
   const studentColumns = [
-    { id: 'rollNum', label: 'Roll No.', minWidth: 100 },
+    { id: 'rollNum', label: 'CNE', minWidth: 100 },
     { id: 'name', label: 'Name', minWidth: 170 },
   ]
 
@@ -155,9 +155,7 @@ const ViewSubject = () => {
         <Typography variant="h6" gutterBottom>
           Subject Code : {subjectDetails && subjectDetails.subCode}
         </Typography>
-        <Typography variant="h6" gutterBottom>
-          Subject Sessions : {subjectDetails && subjectDetails.sessions}
-        </Typography>
+       
         <Typography variant="h6" gutterBottom>
           Number of Students: {numberOfStudents}
         </Typography>

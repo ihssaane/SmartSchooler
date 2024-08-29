@@ -51,9 +51,9 @@ const LoginPage = ({ role }) => {
         {role === 'Student' ? (
           <>
             <Input
-              type="number"
+              type="text"
               name="rollNumber"
-              placeholder="Roll Number"
+              placeholder="CNE"
               value={formData.rollNumber}
               onChange={handleChange}
               required

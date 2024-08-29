@@ -134,6 +134,7 @@ const ShowClasses = () => {
                         actions={[
                           { icon: <PostAddIcon />, name: 'Add Subjects', action: () => navigate("/Admin/addsubject/" + sclass._id) },
                           { icon: <PersonAddAlt1Icon />, name: 'Add Student', action: () => navigate("/Admin/class/addstudents/" + sclass._id) },
+                          
                         ]} 
                       />
                     </ButtonContainer>

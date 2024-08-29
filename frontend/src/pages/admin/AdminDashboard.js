@@ -43,11 +43,11 @@ import ClassDetails from './classRelated/ClassDetails';
 import ShowClasses from './classRelated/ShowClasses';
 import AccountMenu from '../../components/AccountMenu';
 
-const drawerWidth = 240; // Définir drawerWidth ici
+const drawerWidth = 240; 
 
 const AdminDashboard = () => {
     const [open, setOpen] = useState(false);
-    const theme = useTheme(); // Utiliser le hook useTheme pour accéder au thème
+    const theme = useTheme(); 
 
     const toggleDrawer = () => {
         setOpen(!open);
@@ -73,10 +73,10 @@ const AdminDashboard = () => {
                         </IconButton>
                         <Typography
                             component="h1"
-                            variant="h4" // Augmenter la taille de la police
+                            variant="h4" 
                             color="inherit"
                             noWrap
-                            sx={styles.title} // Utiliser les styles personnalisés pour le titre
+                            sx={styles.title} 
                         >
                             Admin Dashboard
                         </Typography>
@@ -190,12 +190,12 @@ const styles = {
         flexShrink: 0,
         whiteSpace: 'nowrap',
         boxSizing: 'border-box',
-        transition: 'width 0.3s ease', // Transition douce pour l'ouverture du tiroir
+        transition: 'width 0.3s ease', 
     },
     drawerClose: (theme) => ({
         overflowX: 'hidden',
         width: theme.spacing(7) + 1,
-        transition: 'width 0.3s ease', // Transition douce pour la fermeture du tiroir
+       
         [theme.breakpoints.up('sm')]: {
             width: theme.spacing(9) + 1,
         },

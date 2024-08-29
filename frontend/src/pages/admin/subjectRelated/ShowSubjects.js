@@ -64,7 +64,7 @@ const ShowSubjects = () => {
                                 {Array.isArray(subjectsList) && subjectsList.length > 0 && subjectsList.map((subject) => (
                                     <SubjectCard key={subject._id}>
                                         <SubjectName>{subject.subName}</SubjectName>
-                                        <SubjectInfo>Sessions: {subject.sessions}</SubjectInfo>
+                                      
                                         <SubjectInfo>Class: {subject.sclassName.sclassName}</SubjectInfo>
                                         <ButtonContainer>
                                             <IconButton onClick={() => deleteHandler(subject._id, "Subject")}>

@@ -40,7 +40,7 @@ const ShowStudents = () => {
 
     const studentColumns = [
         { id: 'name', label: 'Name', minWidth: 170 },
-        { id: 'rollNum', label: 'Number', minWidth: 100 },
+        { id: 'rollNum', label: 'CNE', minWidth: 100 },
         { id: 'sclassName', label: 'Class', minWidth: 170 },
     ]
 

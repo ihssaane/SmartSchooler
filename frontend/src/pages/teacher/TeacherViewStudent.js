@@ -70,7 +70,7 @@ const TeacherViewStudent = () => {
                 <div>
                     Name: {userDetails.name}
                     <br />
-                    Roll Number: {userDetails.rollNum}
+                    CNE: {userDetails.rollNum}
                     <br />
                     Class: {sclassName.sclassName}
                     <br />
@@ -91,7 +91,6 @@ const TeacherViewStudent = () => {
                                                 <StyledTableRow>
                                                     <StyledTableCell>Subject</StyledTableCell>
                                                     <StyledTableCell>Present</StyledTableCell>
-                                                    <StyledTableCell>Total Sessions</StyledTableCell>
                                                     <StyledTableCell>Attendance Percentage</StyledTableCell>
                                                     <StyledTableCell align="center">Actions</StyledTableCell>
                                                 </StyledTableRow>
@@ -101,7 +100,7 @@ const TeacherViewStudent = () => {
                                                 <StyledTableRow>
                                                     <StyledTableCell>{subName}</StyledTableCell>
                                                     <StyledTableCell>{present}</StyledTableCell>
-                                                    <StyledTableCell>{sessions}</StyledTableCell>
+                                                   
                                                     <StyledTableCell>{subjectAttendancePercentage}%</StyledTableCell>
                                                     <StyledTableCell align="center">
                                                         <Button variant="contained" onClick={() => handleOpen(subId)}>
