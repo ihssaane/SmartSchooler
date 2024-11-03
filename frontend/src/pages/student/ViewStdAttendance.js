@@ -63,8 +63,7 @@ const ViewStdAttendance = () => {
                         <StyledTableRow>
                             <StyledTableCell>Subject</StyledTableCell>
                             <StyledTableCell>Present</StyledTableCell>
-                            <StyledTableCell>Total Sessions</StyledTableCell>
-                            <StyledTableCell>Attendance Percentage</StyledTableCell>
+                            
                             <StyledTableCell align="center">Actions</StyledTableCell>
                         </StyledTableRow>
                     </TableHead>
@@ -76,8 +75,7 @@ const ViewStdAttendance = () => {
                                     <StyledTableRow>
                                         <StyledTableCell>{subName}</StyledTableCell>
                                         <StyledTableCell>{present}</StyledTableCell>
-                                        <StyledTableCell>{sessions}</StyledTableCell>
-                                        <StyledTableCell>{subjectAttendancePercentage}%</StyledTableCell>
+                                       
                                         <StyledTableCell align="center">
                                             <StyledButton onClick={() => handleOpen(subId)}>
                                                 {openStates[subId] ? <KeyboardArrowUp /> : <KeyboardArrowDown />}Details

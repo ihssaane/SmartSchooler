@@ -46,9 +46,7 @@ const TeacherDetails = () => {
                             <Typography variant="h6" gutterBottom>
                                 Subject Name: {teacherDetails?.teachSubject?.subName}
                             </Typography>
-                            <Typography variant="h6" gutterBottom>
-                                Subject Sessions: {teacherDetails?.teachSubject?.sessions}
-                            </Typography>
+                           
                         </>
                     ) : (
                         <Button variant="contained" onClick={handleAddSubject}>
